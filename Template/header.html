@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <title>TheBlogs</title>
+</head>
+<body>
+    <nav class="navbar bg-dark navbar-expand-md" data-bs-theme="dark">
+        <div class="container-fluid">
+          <!-- Whenever someone clicks on TheBlogs name, anchor tag takes them to home page -->
+          <a class="navbar-brand fs-2" href="{% url 'home' %}">TheBlogs</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Read Blogs</a>
+              </li>  
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'writeblog' %}">Write Blog</a>
+              </li>  
+            </ul>
+
+            <!-- When user is present on home page only then it will see Search Blog button because all blogs are present on this page -->
+            {% if request.path == '/' %}
+              <button type="button" class="btn btn-outline-primary d-flex mx-0 mx-md-2 my-2 my-md-0" data-bs-toggle="modal" data-bs-target="#searchBlog">Serach Blog</button>
+            {% endif %}
+
+            <!-- If user is not authenticated or registered -->
+            {% if not user.is_authenticated %}
+              <a href="{% url 'login' %}" class="text-decoration-none">
+                <button type="button" class="btn btn-outline-success d-flex">Login/Signup</button>
+              </a>
+            {% else %}
+              <a href="{% url 'logout' %}">
+                <button type="button" class="btn btn-outline-danger">Logout</button>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+    </nav>

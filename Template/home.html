@@ -1,0 +1,41 @@
+{% include 'header.html' %}
+
+{% for i in blogs reversed %}
+    <div class="card w-75 mx-auto my-4">
+        <div class="card-body">
+        <h1 class="card-title">{{i.blog_heading}}</h1>
+        <h5 class="card-title">by {{i.blog_author.first_name | title}} {{i.blog_author.last_name | title}}</h5>
+        <p class="card-text">{{i.blog_content | truncatewords:20}}</p>
+        <!-- Showing only first 20 words of blog. If user wants to read whole blog, then it can click on below button -->
+        <p class="card-text">{{i.created_at}}</p>
+        <a href="/blogs/{{i.id}}" class="btn btn-primary">Read Complete Blog</a>
+        </div>
+    </div>
+
+    <!-- When no blog is wriiten or when user searches a blog which is not present -->
+    {% empty %}
+      <h1 class="text-center my-4">No results found</h1>
+{% endfor %}
+
+  <!-- Modal which appears when user wants to search a blog -->
+  <div class="modal fade" id="searchBlog" tabindex="-1" aria-labelledby="searchBlogLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="searchBlogLabel">Search Blog</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="get">
+                <div class="mb-3">
+                  <label for="blogSearchInput" class="form-label">Enter Blog Name</label>
+                  <input type="text" name="blogsearch" class="form-control border-black" id="blogSearchInput" aria-describedby="emailHelp">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% include 'footer.html' %}
