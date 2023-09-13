@@ -98,6 +98,25 @@ def log_user_in(request):
 
     return render(request, 'login.html')
 
+# If user wants to log in from write blog page
+def log_in_write_blog(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+
+        # If username or password is incorrect, authenticate function returns None
+        if user is not None:
+            # Logging user in
+            login(request, user)
+            return redirect('writeblog')
+        else:
+            messages.info(request, 'Recheck Inputs. Unable to login.')
+            return redirect('login')
+    
+    return render(request, 'login.html')
+
 def log_user_out(request):
     # Logging user out
     logout(request)
